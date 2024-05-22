@@ -4,6 +4,8 @@
  */
 package asnconsultorio;
 
+import vistas.ASNLogin;
+
 /**
  *
  * @author sebas
@@ -15,6 +17,8 @@ public class ASNConsultorio {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        ASNLogin l = new ASNLogin();
+        l.setVisible(true);
     }
-    
+
 }
