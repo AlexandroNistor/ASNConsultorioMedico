@@ -6,7 +6,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -47,12 +47,10 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
+              <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
               <Group type="102" alignment="0" attributes="0">
-                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="jPanel2" max="32767" attributes="0"/>
-                      <Component id="jLabel1" pref="453" max="32767" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <Component id="jPanel2" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -86,7 +84,7 @@
                           <Component id="jLabel2" alignment="0" max="32767" attributes="0"/>
                           <Component id="botonAcceder" max="32767" attributes="0"/>
                           <Component id="fieldUsuario" alignment="0" max="32767" attributes="0"/>
-                          <Component id="fieldContraseña" alignment="0" max="32767" attributes="0"/>
+                          <Component id="fieldContraseña" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="150" max="32767" attributes="0"/>
                   </Group>
@@ -142,10 +140,13 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="ACCEDER"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonAccederActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="fieldUsuario">
             </Component>
-            <Component class="javax.swing.JTextField" name="fieldContrase&#xf1;a">
+            <Component class="javax.swing.JPasswordField" name="fieldContrase&#xf1;a">
             </Component>
           </SubComponents>
         </Container>

@@ -20,6 +20,7 @@ import modelo.ASNConsulta;
 import modelo.ASNConsultaEnfermeria;
 import modelo.ASNPaciente;
 import modelo.ASNPersonal;
+import utilidades.ASNEncriptado;
 
 /**
  *
@@ -29,12 +30,12 @@ public class ASNConexion {
 
     public static Connection conn;
 
-    public static Connection conectar() {
+    public static Connection ASNconectar() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            String url = "jdbc:mysql://145.14.151.1/u812167471_asnconsultorio";
-            String username = "u812167471_reservasSebas";
-            String password = "2024-reservasSebas";
+            String url = "jdbc:mysql://145.14.151.1/u812167471_consultorioDaw";
+            String username = "u812167471_consultorioDaw";
+            String password = "2024-Daw";
             conn = DriverManager.getConnection(url, username, password);
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ASNConexion.class.getName()).log(Level.SEVERE, null, ex);
@@ -42,7 +43,7 @@ public class ASNConexion {
         return conn;
     }
 
-    public static void cerrarConexion() {
+    public static void ASNcerrarConexion() {
         if (conn != null) {
             try {
                 conn.close();
@@ -51,19 +52,18 @@ public class ASNConexion {
             }
         }
     }
+    public static boolean ASNacceder(String user, String pass) throws Exception  {
 
-    public static boolean acceder(String user, String pass) {
-
-        String SQL = "select usuario, contraseña from empleados "
-                + "where usuario=? and contraseña=?";
+        String SQL = "select usuario, contrasenya from personal "
+                + "where usuario=? and contrasenya=?";
 
         try {
             PreparedStatement pst = conn.prepareStatement(SQL);
 
             ResultSet rs;
-
+            
             pst.setString(1, user);
-            pst.setString(2, pass);
+            pst.setString(2, ASNEncriptado.encriptar(pass));
 
             rs = pst.executeQuery();
 
@@ -76,14 +76,74 @@ public class ASNConexion {
 
     }
     
-    public static String[] recuperaDatosUserLogado(String user) {
-        return null;
+    public static String[] ASNrecuperaDatosUserLogado(String usuario) {
+        try {
+        String[] datos = new String[3];
+        String consulta = "SELECT CONCAT(nombre, ' ', apellidos) AS nombre_completo, numero_colegiado, tipo FROM personal WHERE usuario=?";
+        PreparedStatement pst = conn.prepareCall(consulta);
+        pst.setString(1, usuario);
+        ResultSet rs = pst.executeQuery();
+
+        if (rs.next()) {
+            datos[0] = rs.getString("nombre_completo");
+            datos[1] = Integer.toString(rs.getInt("numero_colegiado"));
+            datos[2] = rs.getString("tipo");
+            return datos;
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(ASNConexion.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return null;
     }
     
     public static void recuperaCitasMedicas (DefaultTableModel modelo) {
+        try {
+            ASNconectar();
+            Object[] datos = new Object[3];
+
+            String consulta = "SELECT nombre as NOMBRE, dia as DIA, hora as HORA"
+                    + " from citas";
+
+            ResultSet rs = conn.createStatement().executeQuery(consulta);
+
+            while (rs.next()) {
+                datos[0] = rs.getString("NOMBRE");
+                datos[1] = rs.getString("DIA");
+                datos[2] = rs.getString("HORA");
+
+                modelo.addRow(datos);
+                
+            }
+        } 
+        catch (SQLException ex) {
+            Logger.getLogger(ASNConexion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ASNcerrarConexion();
     }
     
-    public static void recuperaCitasEnfermería (DefaultTableModel modelo) {
+    public static void recuperaCitasEnfermeria (DefaultTableModel modelo) {
+        try {
+            ASNconectar();
+            Object[] datos = new Object[3];
+
+            String consulta = "SELECT nombre as NOMBRE, dia as DIA, hora as HORA"
+                    + " from citasEnfermeria";
+
+            ResultSet rs = conn.createStatement().executeQuery(consulta);
+
+            while (rs.next()) {
+                datos[0] = rs.getString("NOMBRE");
+                datos[1] = rs.getString("DIA");
+                datos[2] = rs.getString("HORA");
+
+                modelo.addRow(datos);
+                
+            }  
+        } 
+        catch (SQLException ex) {
+            Logger.getLogger(ASNConexion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ASNcerrarConexion();
     }
     
     public static boolean registrarCitaMedica(ASNCita c) {
@@ -94,8 +154,8 @@ public class ASNConexion {
         return false;
     }
     
-    public static boolean compruebaDni (String dni) {
-        return false;
+    public static String compruebaDni (String dni) {
+        return null;
     }
     
     public static ASNPaciente recuperaDatosPaciente (String dni) {
@@ -139,20 +199,14 @@ public class ASNConexion {
     }
     
     
-    public static void cargarListaTutores(JComboBox listaTutores) {
-        String SQL = "select asnistor_apellidos || ',' || asnistor_nombre as tutor from asnistor_Profesores";
-        try {
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(SQL);
-
-            while (rs.next()) {
-                listaTutores.addItem(rs.getString("tutor"));
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ASNConexion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    
+    
+    
+    
+    
+    
+    
+    
 
     public static boolean registrarProfesor(ASNCita p) {
         try {

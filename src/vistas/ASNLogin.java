@@ -4,6 +4,12 @@
  */
 package vistas;
 
+import bbdd.ASNConexion;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import static bbdd.ASNConexion.ASNrecuperaDatosUserLogado;
+
 /**
  *
  * @author sebas
@@ -34,7 +40,7 @@ public class ASNLogin extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         botonAcceder = new javax.swing.JButton();
         fieldUsuario = new javax.swing.JTextField();
-        fieldContraseña = new javax.swing.JTextField();
+        fieldContraseña = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,6 +57,11 @@ public class ASNLogin extends javax.swing.JFrame {
         jLabel4.setText("Contraseña");
 
         botonAcceder.setText("ACCEDER");
+        botonAcceder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAccederActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -98,11 +109,10 @@ public class ASNLogin extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -117,7 +127,17 @@ public class ASNLogin extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botonAccederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAccederActionPerformed
+        try {
+            // TODO add your handling code here:
+            acceso();
+        } catch (Exception ex) {
+            Logger.getLogger(ASNLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_botonAccederActionPerformed
 
     /**
      * @param args the command line arguments
@@ -156,7 +176,7 @@ public class ASNLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAcceder;
-    private javax.swing.JTextField fieldContraseña;
+    private javax.swing.JPasswordField fieldContraseña;
     private javax.swing.JTextField fieldUsuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -165,4 +185,25 @@ public class ASNLogin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
+
+    public static Object [] ASNUsuarioLogado;
+    public void acceso() throws Exception {
+        String user = fieldUsuario.getText();
+        String pass = new String(fieldContraseña.getPassword());
+
+        ASNConexion.ASNconectar();
+        if (ASNConexion.ASNacceder(user, pass)) {
+            ASNUsuarioLogado = ASNrecuperaDatosUserLogado(user);
+            ASNConexion.ASNcerrarConexion();
+            ASNMenuPrincipal p = new ASNMenuPrincipal();
+            p.setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Error de Logado.\n Intentalo otra vez.");
+            fieldUsuario.setText("");
+            fieldContraseña.setText("");
+        }
+
+    }
+
 }
