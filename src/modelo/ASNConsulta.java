@@ -9,79 +9,68 @@ package modelo;
  * @author sebas
  */
 public class ASNConsulta {
-    
-    private int numero_colegiado;
-    private String nombre;
-    private String apellidos;
-    private int telefono;
-    private String usuario;
-    private String contrasenya;
-    private String tipo;
 
-    public ASNConsulta(int numero_colegiado, String nombre, String apellidos, int telefono, String usuario, String contrasenya, String tipo) {
-        this.numero_colegiado = numero_colegiado;
-        this.nombre = nombre;
-        this.apellidos = apellidos;
-        this.telefono = telefono;
-        this.usuario = usuario;
-        this.contrasenya = contrasenya;
-        this.tipo = tipo;
+    public ASNConsulta(String dniPaciente, String fechaConsulta, String diagnostico, String tratamiento, String observaciones, int codigoFacultativo) {
+        this.dniPaciente = dniPaciente;
+        this.fechaConsulta = fechaConsulta;
+        this.diagnostico = diagnostico;
+        this.tratamiento = tratamiento;
+        this.observaciones = observaciones;
+        this.codigoFacultativo = codigoFacultativo;
     }
 
-    public int getNumero_colegiado() {
-        return numero_colegiado;
+    public String getDniPaciente() {
+        return dniPaciente;
     }
 
-    public void setNumero_colegiado(int numero_colegiado) {
-        this.numero_colegiado = numero_colegiado;
+    public void setDniPaciente(String dniPaciente) {
+        this.dniPaciente = dniPaciente;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getFechaConsulta() {
+        return fechaConsulta;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setFechaConsulta(String fechaConsulta) {
+        this.fechaConsulta = fechaConsulta;
     }
 
-    public String getApellidos() {
-        return apellidos;
+    public String getDiagnostico() {
+        return diagnostico;
     }
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+    public void setDiagnostico(String diagnostico) {
+        this.diagnostico = diagnostico;
     }
 
-    public int getTelefono() {
-        return telefono;
+    public String getTratamiento() {
+        return tratamiento;
     }
 
-    public void setTelefono(int telefono) {
-        this.telefono = telefono;
+    public void setTratamiento(String tratamiento) {
+        this.tratamiento = tratamiento;
     }
 
-    public String getUsuario() {
-        return usuario;
+    public String getObservaciones() {
+        return observaciones;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
     }
 
-    public String getContrasenya() {
-        return contrasenya;
+    public int getCodigoFacultativo() {
+        return codigoFacultativo;
     }
 
-    public void setContrasenya(String contrasenya) {
-        this.contrasenya = contrasenya;
+    public void setCodigoFacultativo(int codigoFacultativo) {
+        this.codigoFacultativo = codigoFacultativo;
     }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-    
+    private String dniPaciente;
+    private String fechaConsulta;
+    private String diagnostico;
+    private String tratamiento;
+    private String observaciones;
+    private int codigoFacultativo;
+ 
 }

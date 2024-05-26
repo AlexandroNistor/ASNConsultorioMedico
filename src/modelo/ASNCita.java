@@ -11,10 +11,13 @@ import java.util.Date;
  * @author sebas
  */
 public class ASNCita {
-    
-    String dniPaciente;
-    String nombre;
-    Date dia;
+
+    public ASNCita(String dniPaciente, String nombre, Date dia, double hora) {
+        this.dniPaciente = dniPaciente;
+        this.nombre = nombre;
+        this.dia = dia;
+        this.hora = hora;
+    }
 
     public String getDniPaciente() {
         return dniPaciente;
@@ -47,13 +50,11 @@ public class ASNCita {
     public void setHora(double hora) {
         this.hora = hora;
     }
-
-    public ASNCita(String dniPaciente, String nombre, Date dia, double hora) {
-        this.dniPaciente = dniPaciente;
-        this.nombre = nombre;
-        this.dia = dia;
-        this.hora = hora;
-    }
+    
+    String dniPaciente;
+    String nombre;
+    Date dia;
     double hora;
+    
     
 }

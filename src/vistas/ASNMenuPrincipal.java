@@ -5,6 +5,8 @@
 package vistas;
 
 import bbdd.ASNConexion;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -16,7 +18,7 @@ public class ASNMenuPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form ASNMenuPrincipal
      */
-    public ASNMenuPrincipal() {
+    public ASNMenuPrincipal() throws Exception {
         initComponents();
         String tipoUsuario = (String) (ASNLogin.ASNUsuarioLogado[2]);
         labelFecha.setText(java.time.LocalDate.now().toString());
@@ -28,11 +30,11 @@ public class ASNMenuPrincipal extends javax.swing.JFrame {
             botonConsultas.setEnabled(true);
             botonPacientes.setEnabled(true);
             labelAgenciaCitas.setText("AGENDA MÉDICA");
-            ASNConexion.recuperaCitasMedicas(modelo);
+            ASNConexion.ASNrecuperaCitasMedicas(modelo);
         } else if (tipoUsuario.equals("ENFERMERIA")) {
             botonEnfermeria.setEnabled(true);
             labelAgenciaCitas.setText("AGENDA ENFERMERÍA");
-            ASNConexion.recuperaCitasEnfermeria(modelo);
+            ASNConexion.ASNrecuperaCitasEnfermeria(modelo);
         } else if (tipoUsuario.equals("ADMIN")) {
             botonPersonalMedico.setEnabled(true);
         }
@@ -288,7 +290,11 @@ public class ASNMenuPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ASNMenuPrincipal().setVisible(true);
+                try {
+                    new ASNMenuPrincipal().setVisible(true);
+                } catch (Exception ex) {
+                    Logger.getLogger(ASNMenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

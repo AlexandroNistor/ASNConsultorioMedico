@@ -42,6 +42,10 @@ public class ASNPaciente {
         this.fechaRegistro = fechaRegistro;
     }
 
+    public ASNPaciente(String string, String string0, int aInt, String string1) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     public String getDni() {
         return dni;
     }
