@@ -9,18 +9,10 @@ package modelo;
  * @author sebas
  */
 public class ASNPersonal {
-    
-    private int numero_colegiado;
-    private String nombre;
-    private String apellidos;
-    private int telefono;
-    private String usuario;
-    private String contrasenya;
-    private String tipo;
 
-    public ASNPersonal(int numero_colegiado, String nomrbe, String apellidos, int telefono, String usuario, String contrasenya, String tipo) {
+    public ASNPersonal(int numero_colegiado, String nombre, String apellidos, int telefono, String usuario, String contrasenya, String tipo) {
         this.numero_colegiado = numero_colegiado;
-        this.nombre = nomrbe;
+        this.nombre = nombre;
         this.apellidos = apellidos;
         this.telefono = telefono;
         this.usuario = usuario;
@@ -36,12 +28,12 @@ public class ASNPersonal {
         this.numero_colegiado = numero_colegiado;
     }
 
-    public String getNomrbe() {
+    public String getNombre() {
         return nombre;
     }
 
-    public void setNomrbe(String nomrbe) {
-        this.nombre = nomrbe;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getApellidos() {
@@ -84,4 +76,13 @@ public class ASNPersonal {
         this.tipo = tipo;
     }
     
+    private int numero_colegiado;
+    private String nombre;
+    private String apellidos;
+    private int telefono;
+    private String usuario;
+    private String contrasenya;
+    private String tipo;
+
+   
 }
