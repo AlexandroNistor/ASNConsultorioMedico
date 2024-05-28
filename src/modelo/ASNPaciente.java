@@ -11,20 +11,6 @@ import java.util.Date;
  * @author sebas
  */
 public class ASNPaciente {
-    
-    private String dni;
-    private String nombre;
-    private String apellidos;
-    private Date fechaNacimiento;
-    private int telefono;
-    private String email;
-    private int cp;
-    private String sexo;
-    private String tabaquismo;
-    private String consumoAlcohol;
-    private String antecedentesSalud;
-    private String datosSaludGeneral;
-    private Date fechaRegistro;
 
     public ASNPaciente(String dni, String nombre, String apellidos, Date fechaNacimiento, int telefono, String email, int cp, String sexo, String tabaquismo, String consumoAlcohol, String antecedentesSalud, String datosSaludGeneral, Date fechaRegistro) {
         this.dni = dni;
@@ -40,10 +26,6 @@ public class ASNPaciente {
         this.antecedentesSalud = antecedentesSalud;
         this.datosSaludGeneral = datosSaludGeneral;
         this.fechaRegistro = fechaRegistro;
-    }
-
-    public ASNPaciente(String string, String string0, int aInt, String string1) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public String getDni() {
@@ -149,5 +131,26 @@ public class ASNPaciente {
     public void setFechaRegistro(Date fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
+
+    public ASNPaciente(String nombre, String apellidos, int telefono, String email) {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.telefono = telefono;
+        this.email = email;
+    }
     
+    private String dni;
+    private String nombre;
+    private String apellidos;
+    private Date fechaNacimiento;
+    private int telefono;
+    private String email;
+    private int cp;
+    private String sexo;
+    private String tabaquismo;
+    private String consumoAlcohol;
+    private String antecedentesSalud;
+    private String datosSaludGeneral;
+    private Date fechaRegistro;
+
 }

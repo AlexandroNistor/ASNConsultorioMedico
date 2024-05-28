@@ -197,7 +197,7 @@ public class ASNLogin extends javax.swing.JFrame {
         ASNConexion.ASNconectar();
         if (ASNConexion.ASNacceder(user, pass)) {
             ASNUsuarioLogado = ASNrecuperaDatosUserLogado(user);
-            ASNConexion.ASNcerrarConexion();
+            ASNConexion.ASNCerrarConexion();
             ASNMenuPrincipal p = new ASNMenuPrincipal();
             p.setVisible(true);
             this.dispose();

@@ -4,11 +4,33 @@
  */
 package vistas;
 
+import bbdd.ASNConexion;
+import java.awt.Insets;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.table.DefaultTableModel;
+import modelo.ASNPaciente;
+import utilidades.ASNEncriptado;
+import utilidades.ASNUtilidades;
+
 /**
  *
  * @author sebas
  */
 public class ASNMedico extends javax.swing.JFrame {
+    
+    public static String dniPaciente;
+    public static String nombrePaciente;
+    public static String apellidosPaciente;
+    public static String emailPaciente;
 
     /**
      * Creates new form ASNEnfermeria
@@ -34,8 +56,8 @@ public class ASNMedico extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        botonNuevoInforme = new javax.swing.JButton();
+        botonNuevaCita = new javax.swing.JButton();
         fieldNombre = new javax.swing.JTextField();
         fieldApellidos = new javax.swing.JTextField();
         fieldTelefono = new javax.swing.JTextField();
@@ -43,7 +65,7 @@ public class ASNMedico extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaConsultas = new javax.swing.JTable();
-        jButton9 = new javax.swing.JButton();
+        botonActualizarTabla = new javax.swing.JButton();
         fieldDNI = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -59,6 +81,11 @@ public class ASNMedico extends javax.swing.JFrame {
         botonBuscarPaciente.setBackground(new java.awt.Color(0, 0, 0));
         botonBuscarPaciente.setForeground(new java.awt.Color(255, 255, 255));
         botonBuscarPaciente.setText("BUSCAR PACIENTE");
+        botonBuscarPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonBuscarPacienteActionPerformed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(0, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "PACIENTE", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -75,11 +102,21 @@ public class ASNMedico extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Email");
 
-        jButton7.setText("Nuevo Informe");
-        jButton7.setEnabled(false);
+        botonNuevoInforme.setText("Nuevo Informe");
+        botonNuevoInforme.setEnabled(false);
+        botonNuevoInforme.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonNuevoInformeActionPerformed(evt);
+            }
+        });
 
-        jButton8.setText("Nueva Cita");
-        jButton8.setEnabled(false);
+        botonNuevaCita.setText("Nueva Cita");
+        botonNuevaCita.setEnabled(false);
+        botonNuevaCita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonNuevaCitaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -94,9 +131,9 @@ public class ASNMedico extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(68, 68, 68)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(botonNuevoInforme, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(117, 117, 117)
-                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(botonNuevaCita, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
@@ -126,8 +163,8 @@ public class ASNMedico extends javax.swing.JFrame {
                     .addComponent(fieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton7)
-                    .addComponent(jButton8))
+                    .addComponent(botonNuevoInforme)
+                    .addComponent(botonNuevaCita))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
@@ -156,8 +193,8 @@ public class ASNMedico extends javax.swing.JFrame {
             tablaConsultas.getColumnModel().getColumn(3).setHeaderValue("OBSERVACIONES");
         }
 
-        jButton9.setText("Actualizar Tabla");
-        jButton9.setEnabled(false);
+        botonActualizarTabla.setText("Actualizar Tabla");
+        botonActualizarTabla.setEnabled(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -179,7 +216,7 @@ public class ASNMedico extends javax.swing.JFrame {
                             .addComponent(jScrollPane1)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(493, 493, 493)
-                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(botonActualizarTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -197,7 +234,7 @@ public class ASNMedico extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton9)
+                .addComponent(botonActualizarTabla)
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
@@ -246,6 +283,38 @@ public class ASNMedico extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void botonBuscarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarPacienteActionPerformed
+        // TODO add your handling code here:
+        try {
+            dniPaciente = fieldDNI.getText();
+            nombrePaciente = fieldNombre.getText();
+            apellidosPaciente = fieldApellidos.getText();
+            ASNcomprobarDni();
+            DefaultTableModel modelo = (DefaultTableModel) tablaConsultas.getModel();
+            ASNConexion.ASNconectar();
+            ASNConexion.ASNcargaTablaConsultasMedicas(modelo, ASNEncriptado.encriptar(fieldDNI.getText()));
+            ASNConexion.ASNCerrarConexion();
+        } catch (Exception ex) {
+            Logger.getLogger(ASNMedico.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_botonBuscarPacienteActionPerformed
+
+    private void botonNuevoInformeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNuevoInformeActionPerformed
+        // TODO add your handling code here:
+        ASNNuevaConsultaMedica ncm = new ASNNuevaConsultaMedica(this,true);
+        ncm.setVisible(true);
+    }//GEN-LAST:event_botonNuevoInformeActionPerformed
+
+    private void botonNuevaCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNuevaCitaActionPerformed
+        // TODO add your handling code here:
+        dniPaciente = fieldDNI.getText();
+        nombrePaciente = fieldNombre.getText();
+        apellidosPaciente = fieldApellidos.getText();
+        emailPaciente = fieldEmail.getText();
+        ASNNuevaCita nc = new ASNNuevaCita(this, true);
+        nc.setVisible(true);
+    }//GEN-LAST:event_botonNuevaCitaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -283,15 +352,15 @@ public class ASNMedico extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonActualizarTabla;
     private javax.swing.JButton botonBuscarPaciente;
+    private javax.swing.JButton botonNuevaCita;
+    private javax.swing.JButton botonNuevoInforme;
     private javax.swing.JTextField fieldApellidos;
     private javax.swing.JTextField fieldDNI;
     private javax.swing.JTextField fieldEmail;
     private javax.swing.JTextField fieldNombre;
     private javax.swing.JTextField fieldTelefono;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -306,4 +375,65 @@ public class ASNMedico extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaConsultas;
     // End of variables declaration//GEN-END:variables
+
+    public void ASNcomprobarDni() throws Exception{
+        {
+            String valorDNI = fieldDNI.getText();
+            String valorDNIEncriptado = ASNEncriptado.encriptar(valorDNI);
+
+            if (ASNUtilidades.ASNFormatoDniCorrecto(fieldDNI) && ASNUtilidades.ASNLetraDniCorrecta(fieldDNI)) {
+                ASNConexion.ASNconectar();
+                if (ASNConexion.ASNcompruebaDni(valorDNIEncriptado)) {
+                    ASNPaciente paciente = ASNConexion.ASNrecuperaDatosPaciente(valorDNIEncriptado);
+                    fieldNombre.setText(ASNEncriptado.desencriptar(paciente.getNombre()));
+                    fieldApellidos.setText(ASNEncriptado.desencriptar(paciente.getApellidos()));
+                    fieldTelefono.setText(String.valueOf(paciente.getTelefono()));
+                    fieldEmail.setText(paciente.getEmail());
+                    ASNConexion.ASNCerrarConexion();
+                    fieldDNI.setEnabled(false);
+                    botonNuevoInforme.setEnabled(true);
+                    botonNuevaCita.setEnabled(true);
+                    botonActualizarTabla.setEnabled(true);
+
+                    dniPaciente = fieldDNI.getText();
+                } else {
+                    // Si no esta registrado el DNI.
+                    JOptionPane.showMessageDialog(this, "No existen pacientes con este DNI\n"
+                            + "A continuación se abrira la ventana para añadirlo.");
+                    ASNNuevoPaciente np = new ASNNuevoPaciente(this, true);
+                    np.setVisible(true);
+
+                }
+            } else {
+                // Alertas de lo que va mal
+                ASNConexion.ASNconectar();
+                if (!ASNUtilidades.ASNFormatoDniCorrecto(fieldDNI)) {
+                    ASNUtilidades.ASNLanzaAlertaFormatoDni(null, fieldDNI);
+                    ASNConexion.ASNCerrarConexion();
+                } else {
+                    ASNUtilidades.ASNLanzaAlertaLetraDni(null, fieldDNI);
+                    ASNConexion.ASNCerrarConexion();
+                }
+            }
+        }
+    }
+
+    private void ASNDatosFila() {
+
+        String contenido = "FECHA DE CONSULTA: " + String.valueOf(tablaConsultas.getValueAt(tablaConsultas.getSelectedRow(), 0));
+        contenido += "\n\nDIAGNÓSTICO:\n " + String.valueOf(tablaConsultas.getValueAt(tablaConsultas.getSelectedRow(), 1));
+        contenido += "\n\nTRATAMIENTO:\n " + String.valueOf(tablaConsultas.getValueAt(tablaConsultas.getSelectedRow(), 2));
+        contenido += "\n\nOBSERVACIONES:\n " + String.valueOf(tablaConsultas.getValueAt(tablaConsultas.getSelectedRow(), 3));
+
+        JTextArea t = new JTextArea(20, 60);
+        t.setText(contenido);
+        t.setEditable(false);
+        t.setLineWrap(true);
+        t.setFocusable(false);
+        t.setAutoscrolls(true);
+        t.setMargin(new Insets(10, 10, 10, 10));
+
+        JOptionPane.showMessageDialog(this, new JScrollPane(t), "INFORME", 1);
+
+    }
 }

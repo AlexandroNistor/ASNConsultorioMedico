@@ -50,7 +50,7 @@ public class ASNConexion {
         return conn;
     }
 
-    public static void ASNcerrarConexion() {
+    public static void ASNCerrarConexion() {
         if (conn != null) {
             try {
                 conn.close();
@@ -128,7 +128,7 @@ public class ASNConexion {
         } catch (SQLException ex) {
             Logger.getLogger(ASNConexion.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ASNcerrarConexion();
+        ASNCerrarConexion();
     }
 
     public static void ASNrecuperaCitasEnfermeria(DefaultTableModel modelo) throws Exception {
@@ -137,7 +137,7 @@ public class ASNConexion {
             ASNconectar();
             Object[] datos = new Object[3];
 
-            String consultaSQL = "SELECT nombre as NOMBRE, dia as DIA, hora as HORA FROM citasEnfermeria "
+            String consultaSQL = "SELECT nombre as NOMBRE, dia as DIA, hora as HORA FROM citas "
                     + "WHERE dia = curdate()";
 
             ResultSet rs = conn.createStatement().executeQuery(consultaSQL);
@@ -153,10 +153,10 @@ public class ASNConexion {
         } catch (SQLException ex) {
             Logger.getLogger(ASNConexion.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ASNcerrarConexion();
+        ASNCerrarConexion();
     }
 
-    public static boolean ASNregistrarCitaMedica(ASNCita c) throws Exception {
+    public static boolean ASNRegistrarCitaMedica(ASNCita c) throws Exception {
 
         try {
             String consultaSQL = "INSERT INTO citas(dniPaciente, nombre , dia, hora) "
