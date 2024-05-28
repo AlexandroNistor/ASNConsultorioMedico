@@ -118,6 +118,14 @@ public class ASNMedico extends javax.swing.JFrame {
             }
         });
 
+        fieldNombre.setEnabled(false);
+
+        fieldApellidos.setEnabled(false);
+
+        fieldTelefono.setEnabled(false);
+
+        fieldEmail.setEnabled(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -185,6 +193,11 @@ public class ASNMedico extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tablaConsultas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaConsultasMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tablaConsultas);
@@ -310,10 +323,15 @@ public class ASNMedico extends javax.swing.JFrame {
         dniPaciente = fieldDNI.getText();
         nombrePaciente = fieldNombre.getText();
         apellidosPaciente = fieldApellidos.getText();
-        emailPaciente = fieldEmail.getText();
-        ASNNuevaCita nc = new ASNNuevaCita(this, true);
+        emailPaciente = fieldEmail.getText();     
+        ASNNuevaCitaMedica nc = new ASNNuevaCitaMedica(this, true);
         nc.setVisible(true);
     }//GEN-LAST:event_botonNuevaCitaActionPerformed
+
+    private void tablaConsultasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaConsultasMouseClicked
+        // TODO add your handling code here:
+        ASNDatosFila();
+    }//GEN-LAST:event_tablaConsultasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -418,7 +436,7 @@ public class ASNMedico extends javax.swing.JFrame {
         }
     }
 
-    private void ASNDatosFila() {
+    public void ASNDatosFila() {
 
         String contenido = "FECHA DE CONSULTA: " + String.valueOf(tablaConsultas.getValueAt(tablaConsultas.getSelectedRow(), 0));
         contenido += "\n\nDIAGNÓSTICO:\n " + String.valueOf(tablaConsultas.getValueAt(tablaConsultas.getSelectedRow(), 1));

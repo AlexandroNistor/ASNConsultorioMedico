@@ -4,20 +4,13 @@
  */
 package modelo;
 
+import java.util.Date;
+
 /**
  *
  * @author sebas
  */
 public class ASNConsulta {
-
-    public ASNConsulta(String dniPaciente, String fechaConsulta, String diagnostico, String tratamiento, String observaciones, int codigoFacultativo) {
-        this.dniPaciente = dniPaciente;
-        this.fechaConsulta = fechaConsulta;
-        this.diagnostico = diagnostico;
-        this.tratamiento = tratamiento;
-        this.observaciones = observaciones;
-        this.codigoFacultativo = codigoFacultativo;
-    }
 
     public String getDniPaciente() {
         return dniPaciente;
@@ -25,14 +18,6 @@ public class ASNConsulta {
 
     public void setDniPaciente(String dniPaciente) {
         this.dniPaciente = dniPaciente;
-    }
-
-    public String getFechaConsulta() {
-        return fechaConsulta;
-    }
-
-    public void setFechaConsulta(String fechaConsulta) {
-        this.fechaConsulta = fechaConsulta;
     }
 
     public String getDiagnostico() {
@@ -59,15 +44,16 @@ public class ASNConsulta {
         this.observaciones = observaciones;
     }
 
-    public int getCodigoFacultativo() {
-        return codigoFacultativo;
+
+    public ASNConsulta(String dniPaciente, String diagnostico, String tratamiento, String observaciones) {
+        this.dniPaciente = dniPaciente;
+        this.diagnostico = diagnostico;
+        this.tratamiento = tratamiento;
+        this.observaciones = observaciones;
     }
 
-    public void setCodigoFacultativo(int codigoFacultativo) {
-        this.codigoFacultativo = codigoFacultativo;
-    }
     private String dniPaciente;
-    private String fechaConsulta;
+    private Date fechaConsulta;
     private String diagnostico;
     private String tratamiento;
     private String observaciones;

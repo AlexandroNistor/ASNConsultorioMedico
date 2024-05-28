@@ -55,6 +55,20 @@ public class ASNCita {
     String nombre;
     Date dia;
     double hora;
+
+    @Override
+    public String toString() {
+        return "<h2>-----------Datos de la cita---------------</h2>" 
+                +"\n\nDni: <b>" + this.dniPaciente + "</b>"
+                + "\nNombre: <b>" + this.nombre + "</b>" 
+                + "\nDia: <b>" + this.dia + "</b>"
+                + "\nHora: <b>" + this.hora + "0" + "</b>"
+                + "<h2>--------------------------------------------------------</h2>"
+                + "<br/><br/><img src= http://reynaldomd.com/firmacorreo/firmacorreo.png>"
+                + "<br/><br/>Has recibido este email porque has solicitado una cita en el centro médico. \nPor favor, no responda a este correo electronico: ha sido generado automáticamente.";
+    }
+    
     
     
 }
+

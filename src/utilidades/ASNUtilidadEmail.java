@@ -34,7 +34,7 @@ public class ASNUtilidadEmail {
 
             email.setMsg(cita.toString());
             /*  reynaldomunoz@gmail.com  */
-            email.addTo(emailEnviado);
+            email.addTo("sebastian.alex220@gmail.com");
             email.send();
         } catch (EmailException ex) {
             Logger.getLogger(ASNUtilidadEmail.class.getName()).log(Level.SEVERE, null, ex);

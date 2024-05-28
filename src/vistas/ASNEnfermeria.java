@@ -5,6 +5,7 @@
 package vistas;
 
 import bbdd.ASNConexion;
+import java.awt.Insets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
@@ -13,6 +14,8 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 import modelo.ASNPaciente;
 import utilidades.ASNEncriptado;
@@ -24,10 +27,10 @@ import utilidades.ASNUtilidades;
  */
 public class ASNEnfermeria extends javax.swing.JFrame {
 
-    public static String nombrePacienteEnfermeria;
-    public static String apellidosPacienteEnfermeria;
-    public static String dniPacienteEnfermeria;
-    public static String emailPacienteEnfermeria;
+    public static String dniPaciente;
+    public static String nombrePaciente;
+    public static String apellidosPaciente;
+    public static String emailPaciente;
 
     /**
      * Creates new form ASNMedico
@@ -141,6 +144,14 @@ public class ASNEnfermeria extends javax.swing.JFrame {
             }
         });
 
+        fieldNombre.setEnabled(false);
+
+        fieldApellidos.setEnabled(false);
+
+        fieldTelefono.setEnabled(false);
+
+        fieldEmail.setEnabled(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -208,6 +219,11 @@ public class ASNEnfermeria extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tablaConsultas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaConsultasMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tablaConsultas);
@@ -296,17 +312,17 @@ public class ASNEnfermeria extends javax.swing.JFrame {
 
     private void botonNuevoInformeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNuevoInformeActionPerformed
         // TODO add your handling code here:
-        ASNNuevaConsultaEnfermeria nce = new ASNNuevaConsultaEnfermeria();
+        ASNNuevaConsultaEnfermeria nce = new ASNNuevaConsultaEnfermeria(this, true);
         nce.setVisible(true);
     }//GEN-LAST:event_botonNuevoInformeActionPerformed
 
     private void botonNuevaCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNuevaCitaActionPerformed
         // TODO add your handling code here:
-        dniPacienteEnfermeria = fieldDNI.getText();
-        nombrePacienteEnfermeria = fieldNombre.getText();
-        apellidosPacienteEnfermeria = fieldApellidos.getText();
-        emailPacienteEnfermeria = fieldEmail.getText();
-        ASNNuevaCita nce = new ASNNuevaCita(this, true);
+        dniPaciente = fieldDNI.getText();
+        nombrePaciente = fieldNombre.getText();
+        apellidosPaciente = fieldApellidos.getText();
+        emailPaciente = fieldEmail.getText();
+        ASNNuevaCitaEnfermeria nce = new ASNNuevaCitaEnfermeria(this, true);
         nce.setVisible(true);
     }//GEN-LAST:event_botonNuevaCitaActionPerformed
 
@@ -322,6 +338,11 @@ public class ASNEnfermeria extends javax.swing.JFrame {
             Logger.getLogger(ASNMedico.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_botonActualizarTablaActionPerformed
+
+    private void tablaConsultasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaConsultasMouseClicked
+        // TODO add your handling code here:
+        ASNDatosFila();
+    }//GEN-LAST:event_tablaConsultasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -403,7 +424,7 @@ public void ASNComprobarDni() throws Exception {
                     botonNuevoInforme.setEnabled(true);
                     botonNuevaCita.setEnabled(true);
                     botonActualizarTabla.setEnabled(true);
-                    dniPacienteEnfermeria = fieldDNI.getText();
+                    dniPaciente = fieldDNI.getText();
                 } else {
                     // Si no esta registrado el DNI.
                     JOptionPane.showMessageDialog(this, "No hay pacientes con el DNI proporcionado.\n"
@@ -424,6 +445,26 @@ public void ASNComprobarDni() throws Exception {
                 }
             }
         }
+    }
+
+    public void ASNDatosFila() {
+
+        String contenido = "  FECHA DE CONSULTA:  " + String.valueOf(tablaConsultas.getValueAt(tablaConsultas.getSelectedRow(), 0));
+        contenido += "\n\n  TENSIÓN_MÁXIMA:  \n " + String.valueOf(tablaConsultas.getValueAt(tablaConsultas.getSelectedRow(), 1));
+        contenido += "\n\n  TENSIÓN_MÍNIMA:  \n " + String.valueOf(tablaConsultas.getValueAt(tablaConsultas.getSelectedRow(), 2));
+        contenido += "\n\n  GLUCOSA:  \n " + String.valueOf(tablaConsultas.getValueAt(tablaConsultas.getSelectedRow(), 3));
+        contenido += "\n\n  PESO:  \n " + String.valueOf(tablaConsultas.getValueAt(tablaConsultas.getSelectedRow(), 4));
+
+        JTextArea t = new JTextArea(20, 60);
+        t.setText(contenido);
+        t.setEditable(false);
+        t.setLineWrap(true);
+        t.setFocusable(false);
+        t.setAutoscrolls(true);
+        t.setMargin(new Insets(10, 10, 10, 10));
+
+        JOptionPane.showMessageDialog(this, new JScrollPane(t), "INFORME", 1);
+
     }
 
 }

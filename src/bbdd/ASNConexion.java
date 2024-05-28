@@ -177,7 +177,7 @@ public class ASNConexion {
         return false;
     }
 
-    public static boolean ASNregistrarCitaEnfermeria(ASNCita c) throws Exception {
+    public static boolean ASNRegistrarCitaEnfermeria(ASNCita c) throws Exception {
 
         try {
             String consultaSQL = "INSERT INTO citasEnfermeria(dniPaciente, nombre , dia, hora) "
@@ -298,19 +298,17 @@ public class ASNConexion {
     public static boolean ASNregistrarConsultaMedica(ASNConsulta c) {
 
         try {
-            String consultaSQL = "INSERT INTO consultas(dniPaciente, fechaConsulta, diagnostico, tratamiento, observaciones, codigofacultativo) "
-                    + "VALUES (?, ?, ?, ?, ?, ?)";
+            String consultaSQL = "INSERT INTO consultas(dniPaciente, diagnostico, tratamiento, observaciones) "
+                    + "VALUES (?, ?, ?, ?)";
 
             PreparedStatement pst = conn.prepareStatement(consultaSQL);
 
-            java.sql.Date sqlDate = java.sql.Date.valueOf(c.getFechaConsulta());
+            
 
             pst.setString(1, c.getDniPaciente());
-            pst.setDate(2, sqlDate);
-            pst.setString(3, c.getDiagnostico());
-            pst.setString(4, c.getTratamiento());
-            pst.setString(5, c.getObservaciones());
-            pst.setInt(6, c.getCodigoFacultativo());
+            pst.setString(2, c.getDiagnostico());
+            pst.setString(3, c.getTratamiento());
+            pst.setString(4, c.getObservaciones());
 
             pst.execute();
             return true; // Asumiendo que quieres retornar true si todo salió bien
